@@ -1,7 +1,7 @@
 import RegistrationForm from '../components/forms/RegistrationForm'
 import { PageWrapper } from '../components/styles'
 
-const AuthenticationPage = () => {
+const RegistrationPage = () => {
 	return (
 		<PageWrapper>
 			<RegistrationForm />
@@ -9,4 +9,4 @@ const AuthenticationPage = () => {
 	)
 }
 
-export default AuthenticationPage
+export default RegistrationPage

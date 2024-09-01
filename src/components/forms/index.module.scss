@@ -9,7 +9,21 @@ form {
 		// justify-content: space-between;
 	}
 
+	.formFooter {
+		& :last-child {
+			text-decoration: underline;
+			cursor: pointer;
+			color: #a3a3a3;
+		}
+		margin-top: 12px;
+		text-align: center;
+	}
+
 	.button {
+		margin: 8px 0;
+	}
+
+	.loginFormPasswordInput {
 		margin: 8px 0;
 	}
 }

@@ -36,6 +36,12 @@ export const Button = styled.button`
 	color: #fff;
 	padding: 25px 0;
 	cursor: pointer;
+	transition: 250ms background-color, border ease;
+	&:active,
+	&:focus,
+	&:hover {
+		background-color: #2807d8;
+	}
 `
 
 export const PageWrapper = styled.div`
