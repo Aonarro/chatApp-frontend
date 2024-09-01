@@ -1,0 +1,15 @@
+form {
+	width: 800px;
+
+	.nameFieldRow {
+		display: flex;
+		flex-direction: row;
+		margin: 8px 0;
+		gap: 8px;
+		// justify-content: space-between;
+	}
+
+	.button {
+		margin: 8px 0;
+	}
+}
