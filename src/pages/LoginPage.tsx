@@ -3,7 +3,7 @@ import { PageWrapper } from '../components/styles'
 
 const LoginPage = () => {
 	return (
-		<PageWrapper>
+		<PageWrapper display='flex' justifyContent='center' alignItems='center'>
 			<LoginForm />
 		</PageWrapper>
 	)

@@ -1,4 +1,8 @@
 import styled from 'styled-components'
+import { PageWrapperProps } from './StyleTypes'
+
+//Constants
+export const SIDEBAR_WIDTH = 400
 
 export const InputField = styled.input`
 	font-family: 'Inter', sans-serif;
@@ -44,10 +48,37 @@ export const Button = styled.button`
 	}
 `
 
-export const PageWrapper = styled.div`
+export const PageWrapper = styled.div<PageWrapperProps>`
 	background-color: #1a1a1a;
 	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	display: ${props => props.display};
+	justify-content: ${props => props.justifyContent};
+	align-items: ${props => props.alignItems};
+`
+
+export const ConversationSideBarStyle = styled.aside`
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: ${SIDEBAR_WIDTH}px;
+	background-color: #1a1a1a;
+	border-right: 1px solid #54545476;
+	& header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 24px;
+		background-color: #151515;
+		height: 100px;
+		border-bottom: 1px solid #54545476;
+		& h1 {
+			font-weight: 400;
+		}
+	}
+`
+
+export const ConversationChannelPageStyle = styled.div`
+	height: 100%;
+	margin-left: ${SIDEBAR_WIDTH}px;
 `

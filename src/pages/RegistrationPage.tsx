@@ -3,7 +3,7 @@ import { PageWrapper } from '../components/styles'
 
 const RegistrationPage = () => {
 	return (
-		<PageWrapper>
+		<PageWrapper display='flex' justifyContent='center' alignItems='center'>
 			<RegistrationForm />
 		</PageWrapper>
 	)
