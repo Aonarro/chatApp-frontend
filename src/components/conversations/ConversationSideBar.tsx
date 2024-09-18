@@ -1,5 +1,6 @@
 import { FC } from 'react'
 import { TbEdit } from 'react-icons/tb'
+import { useNavigate } from 'react-router-dom'
 import { ConversationType } from '../../utils/types'
 import {
 	ConversationSidebarContainer,
@@ -14,6 +15,8 @@ type Props = {
 }
 
 const ConversationSideBar: FC<Props> = ({ conversations }) => {
+	const navigate = useNavigate()
+
 	return (
 		<ConversationSideBarStyle>
 			<ConversationSidebarHeader>
@@ -21,9 +24,12 @@ const ConversationSideBar: FC<Props> = ({ conversations }) => {
 				<TbEdit size={40} />
 			</ConversationSidebarHeader>
 			<ConversationSidebarContainer>
-				{conversations.map(conversation => {
+				{conversations.map((conversation) => {
 					return (
-						<ConversationSidebarItem key={conversation.id}>
+						<ConversationSidebarItem
+							key={conversation.id}
+							onClick={() => navigate(`/conversations/${conversation.id}`)}
+						>
 							<div className={s.conversationAvatar}></div>
 							<div>
 								<span className={s.conversationName}>{conversation.name}</span>

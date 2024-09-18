@@ -6,17 +6,18 @@ form {
 		flex-direction: row;
 		margin: 8px 0;
 		gap: 8px;
-		// justify-content: space-between;
+
 	}
 
 	.formFooter {
+		margin-top: 12px;
+		text-align: center;
 		& :last-child {
 			text-decoration: underline;
 			cursor: pointer;
 			color: #a3a3a3;
 		}
-		margin-top: 12px;
-		text-align: center;
+
 	}
 
 	.button {

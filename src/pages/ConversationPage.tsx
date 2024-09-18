@@ -6,6 +6,7 @@ import { PageWrapper } from '../components/styles'
 
 const ConversationPage = () => {
 	const { id } = useParams()
+	console.log(id)
 	return (
 		<PageWrapper>
 			<ConversationSideBar conversations={mockConversation} />

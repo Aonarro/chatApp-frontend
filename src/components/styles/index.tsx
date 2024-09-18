@@ -51,9 +51,9 @@ export const Button = styled.button`
 export const PageWrapper = styled.div<PageWrapperProps>`
 	background-color: #1a1a1a;
 	height: 100%;
-	display: ${props => props.display};
-	justify-content: ${props => props.justifyContent};
-	align-items: ${props => props.alignItems};
+	display: ${props => props.$display};
+	justify-content: ${props => props.$justifyContent};
+	align-items: ${props => props.$alignItems};
 `
 
 export const ConversationSideBarStyle = styled.aside`

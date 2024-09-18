@@ -1,28 +1,35 @@
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Button, InputContainer, InputField, InputLabel } from '../styles'
-import s from './index.module.scss'
+import s from './Forms.module.scss'
+import { CreateUserParams } from '../../utils/types.ts'
+import { postRegisterUser } from '../../axios/requests.ts'
 
 const RegistrationForm = () => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm()
+	} = useForm<CreateUserParams>()
+	const navigate = useNavigate();
 
-	console.log(errors)
-
-	const onSubmit = (data: any) => {
-		console.log(data)
+	const onSubmit = async (data: CreateUserParams) => {
+		try {
+			console.log(data)
+			await postRegisterUser(data)
+			navigate('/conversations')
+		} catch (err) {
+			console.log(err)
+		}
 	}
 
 	return (
 		<form className={s.form} onSubmit={handleSubmit(onSubmit)}>
 			<InputContainer>
-				<InputLabel htmlFor='email'>Email</InputLabel>
+				<InputLabel htmlFor="email">Email</InputLabel>
 				<InputField
-					type='email'
-					id='email'
+					type="email"
+					id="email"
 					{...register('email', {
 						required: 'Email is required',
 					})}
@@ -30,20 +37,20 @@ const RegistrationForm = () => {
 			</InputContainer>
 			<div className={s.nameFieldRow}>
 				<InputContainer>
-					<InputLabel htmlFor='firstName'>First Name</InputLabel>
+					<InputLabel htmlFor="firstName">First Name</InputLabel>
 					<InputField
-						type='text'
-						id='firstName'
+						type="text"
+						id="firstName"
 						{...register('firstName', {
 							required: 'First name is required',
 						})}
 					/>
 				</InputContainer>
 				<InputContainer>
-					<InputLabel htmlFor='lastName'>Last Name</InputLabel>
+					<InputLabel htmlFor="lastName">Last Name</InputLabel>
 					<InputField
-						type='text'
-						id='lastName'
+						type="text"
+						id="lastName"
 						{...register('lastName', {
 							required: 'Last name is required',
 						})}
@@ -51,10 +58,10 @@ const RegistrationForm = () => {
 				</InputContainer>
 			</div>
 			<InputContainer>
-				<InputLabel htmlFor='password'>Password</InputLabel>
+				<InputLabel htmlFor="password">Password</InputLabel>
 				<InputField
-					type='password'
-					id='password'
+					type="password"
+					id="password"
 					{...register('password', {
 						required: 'Password is required',
 					})}
@@ -63,7 +70,7 @@ const RegistrationForm = () => {
 			<Button className={s.button}>Create a new account</Button>
 			<div className={s.formFooter}>
 				<span>Already have an account?</span>
-				<Link to='/login'>
+				<Link to="/login">
 					<span>Login</span>
 				</Link>
 			</div>

@@ -1,9 +1,12 @@
 import { ConversationChannelPageStyle } from '../styles'
+import { useContext } from 'react';
+import { AuthContext } from '../../utils/context/AuthContext.tsx';
 
 const ConversationPanel = () => {
+	const {user} = useContext(AuthContext)
 	return (
 		<ConversationChannelPageStyle>
-			ConversationPanel
+			{user && user.email}
 		</ConversationChannelPageStyle>
 	)
 }
