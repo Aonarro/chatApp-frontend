@@ -1,0 +1,43 @@
+form {
+  width: 800px;
+}
+
+.nameFieldRow {
+  display: flex;
+  flex-direction: row;
+  margin: 8px 0;
+  gap: 8px;
+
+}
+
+
+.formFooter {
+  margin-top: 12px;
+  text-align: center;
+
+  & :last-child {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #a3a3a3;
+  }
+
+}
+
+
+.button {
+  margin: 8px 0;
+}
+
+
+.loginFormPasswordInput {
+  margin: 8px 0;
+}
+
+.createConversationForm {
+  width: 100%;
+}
+
+.messageField {
+  margin: 8px 0;
+}
+

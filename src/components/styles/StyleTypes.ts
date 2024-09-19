@@ -3,3 +3,8 @@ export type PageWrapperProps = Partial<{
 	$justifyContent: string
 	$alignItems: string
 }>
+
+
+export type InputContainerProps = Partial<{
+	$backgroundColor: string
+}>

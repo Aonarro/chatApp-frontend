@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, InputContainer, InputField, InputLabel } from '../styles';
-import s from './Forms.module.scss';
+import s from './index.module.scss';
 import { postLoginUser } from '../../axios/requests.ts';
 import { UserCredentialsParams } from '../../utils/types.ts';
 
@@ -9,7 +9,7 @@ const LoginForm = () => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: {},
 	} = useForm<UserCredentialsParams>();
 
 	const navigate = useNavigate();
@@ -17,7 +17,7 @@ const LoginForm = () => {
 
 	const onSubmit = async (data: UserCredentialsParams) => {
 		try {
-			const res = await postLoginUser(data);
+			await postLoginUser(data);
 			navigate('/conversations');
 		} catch (err) {
 			console.log(err);

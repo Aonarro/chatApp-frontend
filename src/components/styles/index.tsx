@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { PageWrapperProps } from './StyleTypes'
+import { InputContainerProps, PageWrapperProps } from './StyleTypes';
 
 //Constants
 export const SIDEBAR_WIDTH = 400
@@ -15,8 +15,8 @@ export const InputField = styled.input`
 	margin: 4px 0;
 `
 
-export const InputContainer = styled.div`
-	background-color: #131313;
+export const InputContainer = styled.div<InputContainerProps>`
+	background-color: ${props => props.$backgroundColor || '#131313'};
 	padding: 12px 16px;
 	border-radius: 10px;
 	width: 100%;
@@ -102,3 +102,57 @@ export const ConversationSidebarItem = styled.div`
 `
 
 export const ConversationSidebarContainer = styled.div``
+
+export const ModalOverlay = styled.div`
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+		position: fixed;
+		left: 0;
+		top: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 99;
+`
+
+export const ModalHeaderStyle = styled.header`
+    margin-top: 24px;
+		padding: 0 18px;
+    background-color: #121212;
+    width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		
+		& h2 {
+				font-weight: 500;
+	
+		}
+`
+
+export const ModalContainerStyle = styled.div`
+    background-color: #121212;
+		width: 650px;
+		border-radius: 10px;
+`
+
+export const ModalContentBodyStyle = styled.div`
+	padding: 24px;
+`
+
+export const TextArea = styled.textarea`
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    width: 100%;
+    background-color: inherit;
+    margin: 4px 0;
+		resize: none;
+		overflow-y: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`
