@@ -101,7 +101,8 @@ export const ConversationSidebarItem = styled.div`
 	background-color: #131313;
 `
 
-export const ConversationSidebarContainer = styled.div``
+export const ConversationSidebarContainer = styled.div`
+margin-top: 100px`
 
 export const ModalOverlay = styled.div`
     height: 100%;

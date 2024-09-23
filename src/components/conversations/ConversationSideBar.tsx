@@ -1,7 +1,7 @@
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { TbEdit } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
-import { ConversationType } from '../../utils/types';
+import { Conversation } from '../../utils/types';
 import {
 	ConversationSidebarContainer,
 	ConversationSidebarHeader,
@@ -10,27 +10,33 @@ import {
 } from '../styles';
 import s from './index.module.scss';
 import CreateConversationModal from '../modals/CreateConversationModal/CreateConversationModal.tsx';
+import { AuthContext } from '../../utils/context/AuthContext.tsx';
 
 type Props = {
-	conversations: ConversationType[]
+	conversations: Conversation[]
 }
 
 const ConversationSideBar: FC<Props> = ({ conversations }) => {
 	const navigate = useNavigate();
-	const [isModalOpen, setIsModalOpen] = useState(true);
+	const { user } = useContext(AuthContext);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const toggleModalVisibility = () => {
-		setIsModalOpen(!isModalOpen)
-	}
+		setIsModalOpen(!isModalOpen);
+	};
+
+	const getDisplayUser = (conversation: Conversation) => {
+		return conversation.creator.id === user?.id ? conversation.recipient : conversation.creator;
+	};
 
 	return (
 		<>
-			{<CreateConversationModal isOpen={isModalOpen} onClose={toggleModalVisibility}/>}
+			{<CreateConversationModal isOpen={isModalOpen} onClose={toggleModalVisibility} />}
 			<ConversationSideBarStyle>
 				<ConversationSidebarHeader>
 					<h1>Conversation</h1>
 					<div onClick={toggleModalVisibility}>
-						<TbEdit size={40} className={s.createConversationBtn}/>
+						<TbEdit size={40} className={s.createConversationBtn} />
 					</div>
 				</ConversationSidebarHeader>
 				<ConversationSidebarContainer>
@@ -42,9 +48,10 @@ const ConversationSideBar: FC<Props> = ({ conversations }) => {
 							>
 								<div className={s.conversationAvatar}></div>
 								<div>
-									<span className={s.conversationName}>{conversation.name}</span>
+									<span
+										className={s.conversationName}>{`${getDisplayUser(conversation).firstName} ${getDisplayUser(conversation).lastName}`}</span>
 									<span className={s.conversationLastMessage}>
-									{conversation.lastMessage}
+									Test text adsdsa
 								</span>
 								</div>
 							</ConversationSidebarItem>
