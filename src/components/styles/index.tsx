@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { InputContainerProps, PageWrapperProps } from './StyleTypes';
+import { InputContainerProps, MessageItemContentProps, MessageItemProps, PageWrapperProps } from './StyleTypes';
 
 //Constants
 export const SIDEBAR_WIDTH = 400
@@ -157,3 +157,107 @@ export const TextArea = styled.textarea`
         display: none;
     }
 `
+
+export const MessagePanelStyle = styled.div`
+		background-color: inherit;
+		height: 100%;
+		position: relative;
+		
+`
+
+export const MessageContainerStyle = styled.div`
+    height: 100%;
+		padding: 10px 0;
+		display: flex;
+		//justify-content: flex-end;
+		flex-direction: column-reverse;
+		overflow-y: auto;
+		
+		&::-webkit-scrollbar {
+        display: none;
+		}
+
+
+`
+
+export const MessageInputFieldContainer = styled.div`
+    background-color: #101010;
+    border-radius: 5px;
+    width: 100%;
+		padding: 12px 16px;
+`
+
+export const MessageInputFieldStyle = styled.input`
+    background-color: inherit;
+    outline: none;
+    border: none;
+    color: #454545;
+    font-size: 18px;
+    width: 100%;
+    padding: 0;
+    margin: 4px 0;
+`
+
+export const MessageItemContainerStyle = styled.div<MessageItemProps>`
+    display: flex;
+		gap: 20px;
+		justify-content: ${(props) => {
+			return props.$isAuthor ? 'flex-end' : 'flex-start'
+		}};
+		align-items: center;
+		padding: 5px 0;
+		margin-top: 15px;
+`
+
+export const MessageItemAvatar = styled.div`
+    width: 50px;
+    height: 50px;
+		background-color: #fff;
+		border-radius: 50px;
+`
+
+export const MessageItemDetails = styled.div`
+
+`
+
+export const MessageItemHeader = styled.div`
+    display: flex;
+    gap: 12px;
+		
+		.authorName {
+				font-weight: 600;
+        font-size: 16px;
+		}
+		
+		.time {
+				color: #6d6d6d;
+        font-size: 14px;
+        font-weight: 500;
+		}
+`
+
+export const MessageItemContent = styled.div<MessageItemContentProps>`
+	padding: ${props => props.$padding};
+`
+
+
+export const MessagePanelBody = styled.div`
+		height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 32px;
+`
+
+export const MessagePanelHeaderStyle = styled.header`
+    background-color: #151515;
+    border-bottom: 1px solid #5454543d;
+		height: 100px;
+		display: flex;
+		justify-content: space-between;
+    align-items: center;
+		padding: 0 32px;
+		position: absolute;
+    width: 100%;
+`
+
+
