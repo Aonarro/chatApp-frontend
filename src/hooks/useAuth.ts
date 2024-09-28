@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { getUserAuthentication } from '../axios/requests.ts'
+import { getUserAuthentication } from '../axios/api.ts'
 import { AuthContext } from '../utils/context/AuthContext.tsx'
 
 export function useAuth() {

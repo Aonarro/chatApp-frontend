@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Button, InputContainer, InputField, InputLabel } from '../styles';
 import s from './index.module.scss';
 import { CreateUserParams } from '../../utils/types.ts';
-import { postRegisterUser } from '../../axios/requests.ts';
+import { postRegisterUser } from '../../axios/api.ts';
 
 const RegistrationForm = () => {
 	const {
@@ -15,7 +15,6 @@ const RegistrationForm = () => {
 
 	const onSubmit = async (data: CreateUserParams) => {
 		try {
-			console.log(data);
 			await postRegisterUser(data);
 			navigate('/conversations');
 		} catch (err) {

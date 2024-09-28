@@ -13,7 +13,6 @@ export type UserCredentialsParams = {
 
 export type User = {
 	id: number;
-	username: string;
 	email: string;
 	firstName: string;
 	lastName: string;
@@ -23,6 +22,7 @@ export type Conversation = {
 	id: number;
 	creator: User;
 	recipient: User;
+	createdAt: string
 };
 
 export type Message = {
@@ -30,4 +30,17 @@ export type Message = {
 	content: string;
 	createdAt: string;
 	author: User;
+}
+
+export type MessageEventPayload = {
+	id: number;
+	createdAt: string;
+	conversation: Conversation;
+	author: User;
+	content: string;
+}
+
+export type CreateMessageParams = {
+	content: string;
+	conversationId: number
 }

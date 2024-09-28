@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, InputContainer, InputField, InputLabel } from '../styles';
 import s from './index.module.scss';
-import { postLoginUser } from '../../axios/requests.ts';
+import { postLoginUser } from '../../axios/api.ts';
 import { UserCredentialsParams } from '../../utils/types.ts';
 
 const LoginForm = () => {

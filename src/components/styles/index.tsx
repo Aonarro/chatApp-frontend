@@ -158,12 +158,7 @@ export const TextArea = styled.textarea`
     }
 `
 
-export const MessagePanelStyle = styled.div`
-		background-color: inherit;
-		height: 100%;
-		position: relative;
-		
-`
+
 
 export const MessageContainerStyle = styled.div`
     height: 100%;
@@ -223,6 +218,7 @@ export const MessageItemDetails = styled.div`
 export const MessageItemHeader = styled.div`
     display: flex;
     gap: 12px;
+		align-items: center;
 		
 		.authorName {
 				font-weight: 600;
@@ -240,17 +236,27 @@ export const MessageItemContent = styled.div<MessageItemContentProps>`
 	padding: ${props => props.$padding};
 `
 
+export const MessagePanelStyle = styled.div`
+		display: flex;
+		flex-direction: column;
+		background-color: inherit;
+		height: 100%;
+		position: relative;
+		
+`
+
 
 export const MessagePanelBody = styled.div`
-		height: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 32px;
+    padding: 100px 32px 32px 32px;
 `
 
 export const MessagePanelHeaderStyle = styled.header`
     background-color: #151515;
     border-bottom: 1px solid #5454543d;
+    border-left: 1px solid #5454543d;
 		height: 100px;
 		display: flex;
 		justify-content: space-between;
