@@ -11,15 +11,14 @@ import {
 import s from './index.module.scss';
 import CreateConversationModal from '../modals/CreateConversationModal/CreateConversationModal.tsx';
 import { AuthContext } from '../../utils/context/AuthContext.tsx';
+import { useConversations } from '../../hooks/useConversations.ts';
 
-type Props = {
-	conversations: Conversation[]
-}
 
-const ConversationSideBar: FC<Props> = ({ conversations }) => {
+const ConversationSideBar: FC = () => {
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const { conversations } = useConversations();
 
 	const toggleModalVisibility = () => {
 		setIsModalOpen(!isModalOpen);

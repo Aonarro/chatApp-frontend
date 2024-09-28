@@ -55,8 +55,6 @@ const MessageContainer: FC<Props> = ({ messages }) => {
 
 			const isAuthor = el.author.id === user?.id;
 
-			console.log(`${el.author.email}, ${el.id}`, isAuthor);
-
 
 			if (arr.length === idx + 1) {
 				return <FormattedMessage user={user} message={el} isAuthor={isAuthor} key={el.id}/>;

@@ -23,7 +23,12 @@ export type Conversation = {
 	creator: User;
 	recipient: User;
 	createdAt: string
+	message: Message;
 };
+
+// export type CreateConversationParams= {
+// 	recipient: User;
+// }
 
 export type Message = {
 	id: number;
