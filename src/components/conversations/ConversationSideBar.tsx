@@ -1,7 +1,10 @@
 import { FC, useContext, useState } from 'react';
 import { TbEdit } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/typedReduxHooks.ts';
+import { AuthContext } from '../../utils/context/AuthContext.tsx';
 import { Conversation } from '../../utils/types';
+import CreateConversationModal from '../modals/CreateConversationModal/CreateConversationModal.tsx';
 import {
 	ConversationSidebarContainer,
 	ConversationSidebarHeader,
@@ -9,16 +12,12 @@ import {
 	ConversationSideBarStyle,
 } from '../styles';
 import s from './index.module.scss';
-import CreateConversationModal from '../modals/CreateConversationModal/CreateConversationModal.tsx';
-import { AuthContext } from '../../utils/context/AuthContext.tsx';
-import { useConversations } from '../../hooks/useConversations.ts';
-
 
 const ConversationSideBar: FC = () => {
 	const navigate = useNavigate();
 	const { user } = useContext(AuthContext);
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { conversations } = useConversations();
+	const { conversations, loading } = useAppSelector((state) => state.conversations);
 
 	const toggleModalVisibility = () => {
 		setIsModalOpen(!isModalOpen);
@@ -39,23 +38,26 @@ const ConversationSideBar: FC = () => {
 					</div>
 				</ConversationSidebarHeader>
 				<ConversationSidebarContainer>
-					{conversations.map((conversation) => {
-						return (
-							<ConversationSidebarItem
-								key={conversation.id}
-								onClick={() => navigate(`/conversations/${conversation.id}`)}
-							>
-								<div className={s.conversationAvatar}></div>
-								<div>
-									<span
-										className={s.conversationName}>{`${getDisplayUser(conversation).firstName} ${getDisplayUser(conversation).lastName}`}</span>
-									<span className={s.conversationLastMessage}>
-									Test text adsdsa
-								</span>
-								</div>
-							</ConversationSidebarItem>
-						);
-					})}
+					{loading ? (
+						<div>loading...</div>
+					) : (
+						conversations.map((conversation) => {
+							return (
+								<ConversationSidebarItem
+									key={conversation.id}
+									onClick={() => navigate(`/conversations/${conversation.id}`)}
+								>
+									<div className={s.conversationAvatar}></div>
+									<div>
+										<span className={s.conversationName}>{`${getDisplayUser(conversation).firstName} ${
+											getDisplayUser(conversation).lastName
+										}`}</span>
+										<span className={s.conversationLastMessage}>{conversation.lastMessageSent}</span>
+									</div>
+								</ConversationSidebarItem>
+							);
+						})
+					)}
 				</ConversationSidebarContainer>
 			</ConversationSideBarStyle>
 		</>

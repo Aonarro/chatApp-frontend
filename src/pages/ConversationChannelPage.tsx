@@ -1,50 +1,43 @@
-import { ConversationChannelPageStyle } from '../components/styles';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { getConversationMessages } from '../axios/api.ts';
-import { Message, MessageEventPayload } from '../utils/types.ts';
 import MessagePanel from '../components/messages/MessagePanel.tsx';
+import { ConversationChannelPageStyle } from '../components/styles';
+import { useAppDispatch, useAppSelector } from '../hooks/typedReduxHooks.ts';
 import { useSocketContext } from '../hooks/useSocketContext.ts';
-import { useAuthContext } from '../hooks/useAuthContext.ts';
-
+import { addMessage } from '../store/messages/messagesSlice.ts';
+import { fetchMessagesThunk } from '../store/messages/messagesThunk.ts';
+import { MessageEventPayload } from '../utils/types.ts';
 
 const ConversationChannelPage = () => {
-	const [messages, setMessages] = useState<Message[]>([]);
-	const {user} = useAuthContext()
+	const { loading } = useAppSelector((state) => state.messages);
 	const socket = useSocketContext();
 	const { id } = useParams();
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		getConversationMessages(+id!)
-			.then((res) => {
-				setMessages(res.data);
-			})
-			.catch((err) => console.log(err));
-
-		console.log(user);
+		dispatch(fetchMessagesThunk(+id!));
 	}, [id]);
 
 	useEffect(() => {
 		socket.on('connection', () => console.log('connected'));
 
 		socket.on('onMessage', (payload: MessageEventPayload) => {
-			// const {conversation, ...messageData} = payload
+			console.log('payload', payload);
 
-			setMessages((prevState) => [payload, ...prevState])
-			console.log("Message received: ", payload);
-		})
+			dispatch(addMessage(payload));
+			console.log('Message received: ', payload);
+		});
 
 		return () => {
-			socket.off('connection')
-			socket.off('onMessage')
-		}
+			socket.off('connection');
+			socket.off('onMessage');
+		};
 	}, []);
 
-
 	return (
-		<ConversationChannelPageStyle>{
-			<MessagePanel messages={messages}></MessagePanel>
-		}</ConversationChannelPageStyle>
+		<ConversationChannelPageStyle>
+			{loading ? <div>Loading...</div> : <MessagePanel></MessagePanel>}
+		</ConversationChannelPageStyle>
 	);
 };
 

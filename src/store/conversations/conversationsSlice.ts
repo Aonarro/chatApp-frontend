@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Conversation } from '../utils/types.ts';
-import { getConversations } from '../axios/api.ts';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Conversation } from '../../utils/types.ts';
+import { fetchConversationsThunk } from './conversationsThunk.ts';
 
 
 interface IConversationsState {
@@ -14,15 +14,6 @@ const initialState: IConversationsState = {
 	loading: false,
 };
 
-export const fetchConversationsThunk = createAsyncThunk('conversations/fetchConversations', async () => {
-	try {
-		const response = await getConversations();
-		console.log(response);
-		return response.data;
-	} catch (err) {
-		console.log(err);
-	}
-});
 
 export const conversationsSlice = createSlice({
 	name: 'conversations',

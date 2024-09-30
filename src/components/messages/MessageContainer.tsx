@@ -1,24 +1,24 @@
+import { FC, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/typedReduxHooks.ts';
+import { useAuthContext } from '../../hooks/useAuthContext.ts';
+import { selectConversationMessage } from '../../store/messages/messagesSlice.ts';
+import { formatDate } from '../../utils/helpers.ts';
+import { Message, User } from '../../utils/types.ts';
 import {
 	MessageContainerStyle,
 	MessageItemAvatar,
-	MessageItemContainerStyle, MessageItemContent,
+	MessageItemContainerStyle,
+	MessageItemContent,
 	MessageItemDetails,
 	MessageItemHeader,
 } from '../styles';
-import { FC, useEffect } from 'react';
-import { Message, User } from '../../utils/types.ts';
-import { formatDate } from '../../utils/helpers.ts';
-import { useAuthContext } from '../../hooks/useAuthContext.ts';
-
-type Props = {
-	messages: Message[]
-}
 
 type formattedMessageProps = {
-	user: User | undefined
-	message: Message
-	isAuthor: boolean
-}
+	user: User | undefined;
+	message: Message;
+	isAuthor: boolean;
+};
 
 export const FormattedMessage: FC<formattedMessageProps> = ({ user, message, isAuthor }) => {
 	return (
@@ -26,69 +26,59 @@ export const FormattedMessage: FC<formattedMessageProps> = ({ user, message, isA
 			<MessageItemAvatar />
 			<MessageItemDetails>
 				<MessageItemHeader>
-							<span className="authorName" style={{
-								color: user?.id === message.author.id ? '#2464c5' : 'rgba(133,21,49,0.68)',
-							}}>
-								{message.author.firstName} {message.author.lastName}
-							</span>
+					<span
+						className="authorName"
+						style={{
+							color: user?.id === message.author.id ? '#2464c5' : 'rgba(133,21,49,0.68)',
+						}}
+					>
+						{message.author.firstName} {message.author.lastName}
+					</span>
 
-					<span className="time">
-								{formatDate(message.createdAt)}
-							</span>
+					<span className="time">{formatDate(message.createdAt)}</span>
 				</MessageItemHeader>
-				<MessageItemContent>
-					{message.content}
-				</MessageItemContent>
+				<MessageItemContent>{message.content}</MessageItemContent>
 			</MessageItemDetails>
 		</MessageItemContainerStyle>
 	);
 };
 
-const MessageContainer: FC<Props> = ({ messages }) => {
-
+const MessageContainer: FC = () => {
+	const { id } = useParams();
 	const { user } = useAuthContext();
+	const conversationMessages = useAppSelector((state) => selectConversationMessage(state, +id!));
+
+	console.log(conversationMessages, id);
 
 	const formatMessages = () => {
-		return messages.map((el, idx, arr) => {
+		return conversationMessages?.messages.map((el, idx, arr) => {
 			const currentMessage = arr[idx];
 			const nextMessage = arr[idx + 1];
 
 			const isAuthor = el.author.id === user?.id;
 
-
 			if (arr.length === idx + 1) {
-				return <FormattedMessage user={user} message={el} isAuthor={isAuthor} key={el.id}/>;
+				return <FormattedMessage user={user} message={el} isAuthor={isAuthor} key={el.id} />;
 			}
 
 			if (currentMessage.author.id === nextMessage.author.id) {
 				return (
 					<MessageItemContainerStyle key={el.id} $isAuthor={isAuthor}>
-						<MessageItemContent $padding="0 0 0 70px">
-							{el.content}
-						</MessageItemContent>
-
+						<MessageItemContent $padding="0 0 0 70px">{el.content}</MessageItemContent>
 					</MessageItemContainerStyle>
 				);
 			} else {
-				return <FormattedMessage user={user} message={el} isAuthor={isAuthor} key={el.id}/>;
+				return <FormattedMessage user={user} message={el} isAuthor={isAuthor} key={el.id} />;
 			}
 		});
-
 	};
-
 
 	useEffect(() => {
 		formatMessages();
+		console.log(conversationMessages);
 	});
 
-
-	return (
-		<MessageContainerStyle>
-			{formatMessages()}
-		</MessageContainerStyle>
-
-	);
-
+	return <MessageContainerStyle>{formatMessages()}</MessageContainerStyle>;
 };
 
 export default MessageContainer;

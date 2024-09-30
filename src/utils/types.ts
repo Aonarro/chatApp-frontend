@@ -1,4 +1,3 @@
-
 export type CreateUserParams = {
 	email: string;
 	firstName: string;
@@ -22,30 +21,33 @@ export type Conversation = {
 	id: number;
 	creator: User;
 	recipient: User;
-	createdAt: string
-	message: Message;
+	createdAt: string;
+	lastMessageSent: string;
 };
-
-// export type CreateConversationParams= {
-// 	recipient: User;
-// }
 
 export type Message = {
 	id: number;
 	content: string;
 	createdAt: string;
 	author: User;
-}
+};
 
 export type MessageEventPayload = {
-	id: number;
-	createdAt: string;
+	message: Message;
 	conversation: Conversation;
-	author: User;
-	content: string;
-}
+};
+
+export type FetchMessagePayload = {
+	id: number;
+	messages: Message[];
+};
+
+export type ConversationMessage = {
+	id: number;
+	messages: Message[];
+};
 
 export type CreateMessageParams = {
 	content: string;
-	conversationId: number
-}
+	conversationId: number;
+};

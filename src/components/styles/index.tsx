@@ -180,6 +180,10 @@ export const MessageInputFieldContainer = styled.div`
     border-radius: 5px;
     width: 100%;
 		padding: 12px 16px;
+		
+		form {
+				width: 100%;
+		}
 `
 
 export const MessageInputFieldStyle = styled.input`
