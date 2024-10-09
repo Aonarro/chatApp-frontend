@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import { postRegisterUser } from '../../axios/api.ts';
+import { CreateUserParams } from '../../utils/types.ts';
 import { Button, InputContainer, InputField, InputLabel } from '../styles';
 import s from './index.module.scss';
-import { CreateUserParams } from '../../utils/types.ts';
-import { postRegisterUser } from '../../axios/api.ts';
 
 const RegistrationForm = () => {
 	const {

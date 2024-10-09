@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import MessagePanel from '../components/messages/MessagePanel.tsx';
 import { ConversationChannelPageStyle } from '../components/styles';
 import { useAppDispatch, useAppSelector } from '../hooks/typedReduxHooks.ts';
+import { useAuthContext } from '../hooks/useAuthContext.ts';
 import { useSocketContext } from '../hooks/useSocketContext.ts';
 import { addMessage } from '../store/messages/messagesSlice.ts';
 import { fetchMessagesThunk } from '../store/messages/messagesThunk.ts';
@@ -10,6 +11,7 @@ import { MessageEventPayload } from '../utils/types.ts';
 
 const ConversationChannelPage = () => {
 	const { loading } = useAppSelector((state) => state.messages);
+	const { user } = useAuthContext();
 	const socket = useSocketContext();
 	const { id } = useParams();
 	const dispatch = useAppDispatch();
@@ -19,8 +21,6 @@ const ConversationChannelPage = () => {
 	}, [id]);
 
 	useEffect(() => {
-		socket.on('connection', () => console.log('connected'));
-
 		socket.on('onMessage', (payload: MessageEventPayload) => {
 			console.log('payload', payload);
 
@@ -29,7 +29,6 @@ const ConversationChannelPage = () => {
 		});
 
 		return () => {
-			socket.off('connection');
 			socket.off('onMessage');
 		};
 	}, []);
