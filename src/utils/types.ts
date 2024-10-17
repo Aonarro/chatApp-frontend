@@ -22,8 +22,14 @@ export type Conversation = {
 	creator: User;
 	recipient: User;
 	createdAt: string;
-	lastMessageSent: string;
+	lastMessageSent: Message;
 };
+
+// export type LastMessageSent = {
+// 	id: number;
+// 	content: string;
+// 	createdAt: string;
+// };
 
 export type Message = {
 	id: number;

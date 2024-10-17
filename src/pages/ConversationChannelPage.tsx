@@ -5,6 +5,7 @@ import { ConversationChannelPageStyle } from '../components/styles';
 import { useAppDispatch, useAppSelector } from '../hooks/typedReduxHooks.ts';
 import { useAuthContext } from '../hooks/useAuthContext.ts';
 import { useSocketContext } from '../hooks/useSocketContext.ts';
+import { updateConversation } from '../store/conversations/conversationsSlice.ts';
 import { addMessage } from '../store/messages/messagesSlice.ts';
 import { fetchMessagesThunk } from '../store/messages/messagesThunk.ts';
 import { MessageEventPayload } from '../utils/types.ts';
@@ -25,6 +26,7 @@ const ConversationChannelPage = () => {
 			console.log('payload', payload);
 
 			dispatch(addMessage(payload));
+			dispatch(updateConversation(payload.conversation));
 			console.log('Message received: ', payload);
 		});
 

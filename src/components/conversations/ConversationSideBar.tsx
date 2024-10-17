@@ -52,7 +52,7 @@ const ConversationSideBar: FC = () => {
 										<span className={s.conversationName}>{`${getDisplayUser(conversation).firstName} ${
 											getDisplayUser(conversation).lastName
 										}`}</span>
-										<span className={s.conversationLastMessage}>{conversation.lastMessageSent}</span>
+										<span className={s.conversationLastMessage}>{conversation.lastMessageSent?.content}</span>
 									</div>
 								</ConversationSidebarItem>
 							);
