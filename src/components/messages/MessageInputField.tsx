@@ -5,9 +5,10 @@ type Props = {
 	message: string;
 	setMessage: Dispatch<SetStateAction<string>>;
 	handleSendMessage: (e: React.FormEvent<HTMLFormElement>) => void;
+	sendTypingStatus: () => void;
 };
 
-const MessageInputField: FC<Props> = ({ message, setMessage, handleSendMessage }) => {
+const MessageInputField: FC<Props> = ({ message, setMessage, handleSendMessage, sendTypingStatus }) => {
 	return (
 		<MessageInputFieldContainer>
 			<form onSubmit={handleSendMessage}>
@@ -15,6 +16,9 @@ const MessageInputField: FC<Props> = ({ message, setMessage, handleSendMessage }
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
 					placeholder="Write a message..."
+					onKeyDown={(e) => {
+						sendTypingStatus();
+					}}
 				/>
 			</form>
 		</MessageInputFieldContainer>

@@ -1,6 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Conversation } from '../../utils/types.ts';
-import { fetchConversationsThunk } from './conversationsThunk.ts';
+import { RootState } from '../index.ts';
+import { fetchConversationsThunk, postNewConversationThunk } from './conversationsThunk.ts';
 
 interface IConversationsState {
 	conversations: Conversation[];
@@ -34,9 +35,28 @@ export const conversationsSlice = createSlice({
 			})
 			.addCase(fetchConversationsThunk.pending, (state) => {
 				state.loading = true;
+			})
+			.addCase(postNewConversationThunk.fulfilled, (state, action: PayloadAction<Conversation | undefined>) => {
+				if (action.payload) {
+					const conversation = action.payload;
+					state.conversations.unshift(conversation);
+					console.log(action.payload);
+				}
+				state.loading = false;
+			})
+			.addCase(postNewConversationThunk.pending, (state) => {
+				state.loading = true;
 			});
 	},
 });
+
+const selectConversations = (state: RootState) => state.conversations.conversations;
+const selectConversationId = (state: RootState, id: number) => id;
+
+export const selectConversationById = createSelector(
+	[selectConversations, selectConversationId],
+	(conversations, conversationId) => conversations.find((conversation) => conversation.id === conversationId)
+);
 
 export const { addConversation, updateConversation } = conversationsSlice.actions;
 

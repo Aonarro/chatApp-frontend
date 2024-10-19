@@ -1,5 +1,6 @@
 import {
 	Conversation,
+	CreateConversationParams,
 	CreateMessageParams,
 	CreateUserParams,
 	FetchMessagePayload,
@@ -19,3 +20,6 @@ export const getConversations = () => axiosClient.get<Conversation[]>(`/conversa
 export const getConversationMessages = (id: number) => axiosClient.get<FetchMessagePayload>(`/messages/${id}`, config);
 
 export const postMessage = (data: CreateMessageParams) => axiosClient.post('/messages', data, config);
+
+export const postNewConversation = (data: CreateConversationParams) =>
+	axiosClient.post<Conversation>('/conversations', data, config);

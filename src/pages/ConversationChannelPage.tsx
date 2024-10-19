@@ -22,22 +22,38 @@ const ConversationChannelPage = () => {
 	}, [id]);
 
 	useEffect(() => {
-		socket.on('onMessage', (payload: MessageEventPayload) => {
-			console.log('payload', payload);
+		socket.connect();
+		socket.emit('onClientConnect', { conversationId: +id! });
+		socket.on('connect', () => {
+			console.log('Connected to socket');
+		});
+		socket.on('Connected to the chat', (data) => {
+			console.log(data);
+		});
 
+		socket.on('onMessage', (payload: MessageEventPayload) => {
 			dispatch(addMessage(payload));
 			dispatch(updateConversation(payload.conversation));
 			console.log('Message received: ', payload);
 		});
 
 		return () => {
+			socket.off('connect');
+			socket.disconnect();
+			socket.off('Connected to the chat');
 			socket.off('onMessage');
 		};
-	}, []);
+	}, [id]);
+
+	const sendTypingStatus = () => {
+		console.log('You are typing');
+
+		socket.emit('onTyping', { userId: user?.id, conversationId: +id! });
+	};
 
 	return (
 		<ConversationChannelPageStyle>
-			{loading ? <div>Loading...</div> : <MessagePanel></MessagePanel>}
+			{loading ? <div>Loading...</div> : <MessagePanel sendTypingStatus={sendTypingStatus}></MessagePanel>}
 		</ConversationChannelPageStyle>
 	);
 };

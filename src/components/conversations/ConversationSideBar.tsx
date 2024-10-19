@@ -19,21 +19,17 @@ const ConversationSideBar: FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const { conversations, loading } = useAppSelector((state) => state.conversations);
 
-	const toggleModalVisibility = () => {
-		setIsModalOpen(!isModalOpen);
-	};
-
 	const getDisplayUser = (conversation: Conversation) => {
 		return conversation.creator.id === user?.id ? conversation.recipient : conversation.creator;
 	};
 
 	return (
 		<>
-			{<CreateConversationModal isOpen={isModalOpen} onClose={toggleModalVisibility} />}
+			{<CreateConversationModal isOpen={isModalOpen} onClose={setIsModalOpen} />}
 			<ConversationSideBarStyle>
 				<ConversationSidebarHeader>
 					<h1>Conversation</h1>
-					<div onClick={toggleModalVisibility}>
+					<div onClick={() => setIsModalOpen(true)}>
 						<TbEdit size={40} className={s.createConversationBtn} />
 					</div>
 				</ConversationSidebarHeader>

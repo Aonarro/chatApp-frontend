@@ -25,12 +25,6 @@ export type Conversation = {
 	lastMessageSent: Message;
 };
 
-// export type LastMessageSent = {
-// 	id: number;
-// 	content: string;
-// 	createdAt: string;
-// };
-
 export type Message = {
 	id: number;
 	content: string;
@@ -56,4 +50,9 @@ export type ConversationMessage = {
 export type CreateMessageParams = {
 	content: string;
 	conversationId: number;
+};
+
+export type CreateConversationParams = {
+	email: string;
+	message: string;
 };

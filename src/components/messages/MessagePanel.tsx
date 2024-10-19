@@ -6,7 +6,11 @@ import MessageContainer from './MessageContainer.tsx';
 import MessageInputField from './MessageInputField.tsx';
 import MessagePanelHeader from './MessagePanelHeader.tsx';
 
-const MessagePanel: FC = () => {
+type Props = {
+	sendTypingStatus: () => void;
+};
+
+const MessagePanel: FC<Props> = ({ sendTypingStatus }) => {
 	const [message, setMessage] = useState('');
 	const { id } = useParams();
 
@@ -28,7 +32,13 @@ const MessagePanel: FC = () => {
 
 			<MessagePanelBody>
 				<MessageContainer />
-				<MessageInputField message={message} setMessage={setMessage} handleSendMessage={handleSendMessage} />
+				{/* {<div>Is Typing...</div>} */}
+				<MessageInputField
+					sendTypingStatus={sendTypingStatus}
+					message={message}
+					setMessage={setMessage}
+					handleSendMessage={handleSendMessage}
+				/>
 			</MessagePanelBody>
 		</MessagePanelStyle>
 	);

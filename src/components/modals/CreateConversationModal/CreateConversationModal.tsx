@@ -1,13 +1,13 @@
-import { createRef, FC, useEffect } from 'react';
+import { createRef, Dispatch, FC, SetStateAction, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import { ModalOverlay } from '../../styles';
-import CreateConversationModalForm from '../../forms/CreateConversationModalForm.tsx';
-import { ModalContainer, ModalContentBody, ModalHeader } from './index.tsx';
 import { MdClose } from 'react-icons/md';
+import CreateConversationModalForm from '../../forms/CreateConversationModalForm.tsx';
+import { ModalOverlay } from '../../styles';
+import { ModalContainer, ModalContentBody, ModalHeader } from './index.tsx';
 
 type ModalProps = {
 	isOpen: boolean;
-	onClose: () => void;
+	onClose: Dispatch<SetStateAction<boolean>>;
 };
 
 const CreateConversationModal: FC<ModalProps> = ({ isOpen, onClose }) => {
@@ -15,19 +15,17 @@ const CreateConversationModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
-			return e.key === 'Escape' && onClose();
+			return e.key === 'Escape' && onClose(false);
 		};
-
 
 		window.addEventListener('keydown', handleKeyDown);
 	}, []);
 
 	const handleClickOnOverlay = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 		if (ref.current === e.target) {
-			onClose();
+			onClose(false);
 		}
 	};
-
 
 	if (!isOpen) return null;
 	return ReactDOM.createPortal(
@@ -35,14 +33,14 @@ const CreateConversationModal: FC<ModalProps> = ({ isOpen, onClose }) => {
 			<ModalContainer>
 				<ModalHeader>
 					<h2>Create a new conversation!</h2>
-					<MdClose size={32} onClick={() => onClose()} />
+					<MdClose size={32} onClick={() => onClose(false)} />
 				</ModalHeader>
 				<ModalContentBody>
-					<CreateConversationModalForm />
+					<CreateConversationModalForm onClose={onClose} />
 				</ModalContentBody>
 			</ModalContainer>
 		</ModalOverlay>,
-		document.body,
+		document.body
 	);
 };
 
