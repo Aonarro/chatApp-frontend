@@ -19,7 +19,7 @@ const MessagePanel: FC<Props> = ({ sendTypingStatus }) => {
 		if (!id || !message) return;
 		try {
 			console.log('Message send', message);
-			await postMessage({ content: message, conversationId: +id });
+			await postMessage(+id, { content: message });
 			setMessage('');
 		} catch (err) {
 			console.log(err);

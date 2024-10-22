@@ -17,9 +17,11 @@ export const getUserAuthentication = () => axiosClient.get<User>(`/auth/status`,
 
 export const getConversations = () => axiosClient.get<Conversation[]>(`/conversations`, config);
 
-export const getConversationMessages = (id: number) => axiosClient.get<FetchMessagePayload>(`/messages/${id}`, config);
+export const getConversationMessages = (conversationId: number) =>
+	axiosClient.get<FetchMessagePayload>(`conversations/${conversationId}/messages`, config);
 
-export const postMessage = (data: CreateMessageParams) => axiosClient.post('/messages', data, config);
+export const postMessage = (id: number, data: CreateMessageParams) =>
+	axiosClient.post(`/conversations/${id}/messages`, data, config);
 
 export const postNewConversation = (data: CreateConversationParams) =>
 	axiosClient.post<Conversation>('/conversations', data, config);
