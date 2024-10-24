@@ -16,7 +16,7 @@ const MessageInputField: FC<Props> = ({ message, setMessage, handleSendMessage, 
 					value={message}
 					onChange={(e) => setMessage(e.target.value)}
 					placeholder="Write a message..."
-					onKeyDown={(e) => {
+					onKeyDown={() => {
 						sendTypingStatus();
 					}}
 				/>

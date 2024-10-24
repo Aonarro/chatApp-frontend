@@ -48,7 +48,7 @@ export const messagesSlice = createSlice({
 
 const selectConversationMessages = (state: RootState) => state.messages.messages;
 
-const selectConversationMessageId = (state, id: number) => id;
+const selectConversationMessageId = (state: RootState, id: number) => id;
 
 export const selectConversationMessage = createSelector(
 	[selectConversationMessages, selectConversationMessageId],

@@ -1,18 +1,17 @@
 export type PageWrapperProps = Partial<{
-	$display: string
-	$justifyContent: string
-	$alignItems: string
-}>
-
+	$display: string;
+	$justifyContent: string;
+	$alignItems: string;
+}>;
 
 export type InputContainerProps = Partial<{
-	$backgroundColor: string
-}>
+	$backgroundColor: string;
+}>;
 
 export type MessageItemProps = Partial<{
-	$isAuthor: boolean
-}>
+	$isAuthor: boolean;
+}>;
 
 export type MessageItemContentProps = Partial<{
-	$padding: string
-}>
+	$padding: string;
+}>;

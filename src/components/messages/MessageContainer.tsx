@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, MouseEvent, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/typedReduxHooks.ts';
 import { useAuthContext } from '../../hooks/useAuthContext.ts';
@@ -18,11 +18,12 @@ type formattedMessageProps = {
 	user: User | undefined;
 	message: Message;
 	isAuthor: boolean;
+	onContextMenu: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
-export const FormattedMessage: FC<formattedMessageProps> = ({ user, message, isAuthor }) => {
+export const FormattedMessage: FC<formattedMessageProps> = ({ user, message, isAuthor, onContextMenu }) => {
 	return (
-		<MessageItemContainerStyle key={message.id} $isAuthor={isAuthor}>
+		<MessageItemContainerStyle onContextMenu={onContextMenu} key={message.id} $isAuthor={isAuthor}>
 			<MessageItemAvatar />
 			<MessageItemDetails>
 				<MessageItemHeader>
@@ -48,6 +49,10 @@ const MessageContainer: FC = () => {
 	const { user } = useAuthContext();
 	const conversationMessages = useAppSelector((state) => selectConversationMessage(state, +id!));
 
+	const onContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+		console.log('helo');
+	};
+
 	console.log(conversationMessages, id);
 
 	const formatMessages = () => {
@@ -58,7 +63,9 @@ const MessageContainer: FC = () => {
 			const isAuthor = el.author.id === user?.id;
 
 			if (arr.length === idx + 1) {
-				return <FormattedMessage user={user} message={el} isAuthor={isAuthor} key={el.id} />;
+				return (
+					<FormattedMessage onContextMenu={onContextMenu} user={user} message={el} isAuthor={isAuthor} key={el.id} />
+				);
 			}
 
 			if (currentMessage.author.id === nextMessage.author.id) {
@@ -68,7 +75,9 @@ const MessageContainer: FC = () => {
 					</MessageItemContainerStyle>
 				);
 			} else {
-				return <FormattedMessage user={user} message={el} isAuthor={isAuthor} key={el.id} />;
+				return (
+					<FormattedMessage onContextMenu={onContextMenu} user={user} message={el} isAuthor={isAuthor} key={el.id} />
+				);
 			}
 		});
 	};
