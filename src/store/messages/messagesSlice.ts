@@ -1,7 +1,12 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ConversationMessage, FetchMessagePayload, MessageEventPayload } from '../../utils/types.ts';
+import {
+	ConversationMessage,
+	DeleteMessageResponse,
+	FetchMessagePayload,
+	MessageEventPayload,
+} from '../../utils/types.ts';
 import { RootState } from '../index.ts';
-import { fetchMessagesThunk } from './messagesThunk.ts';
+import { deleteMessageThunk, fetchMessagesThunk } from './messagesThunk.ts';
 
 interface IMessagesState {
 	messages: ConversationMessage[];
@@ -24,13 +29,16 @@ export const messagesSlice = createSlice({
 			);
 			conversationMessages?.messages.unshift(message);
 		},
-		deleteMessage: (state, action) => {
+		deleteMessage: (state, action: PayloadAction<DeleteMessageResponse>) => {
 			console.log('Inside deleteMessage reducer');
-			const { payload } = action;
-			const conversationMessages = state.messages.find((messages) => messages.id === payload.conversationId);
+			const { conversationId, messageId } = action.payload;
+			const conversationMessages = state.messages.find(
+				(conversationMessage) => conversationMessage.id === +conversationId
+			);
 			if (!conversationMessages) return;
-			const messageIndex = conversationMessages.messages.findIndex((message) => message.id === payload.messageId);
-			conversationMessages.messages.splice(messageIndex, 1);
+			const messageIndex = conversationMessages.messages.findIndex((message) => message.id === +messageId);
+
+			conversationMessages?.messages.splice(messageIndex, 1);
 		},
 	},
 	extraReducers: (builder) =>
@@ -40,6 +48,7 @@ export const messagesSlice = createSlice({
 			})
 			.addCase(fetchMessagesThunk.fulfilled, (state, action: PayloadAction<FetchMessagePayload | undefined>) => {
 				if (action.payload) {
+					console.log(action.payload);
 					const { id } = action.payload;
 					const index = state.messages.findIndex((conversationMessage) => conversationMessage.id === id);
 					const exists = state.messages.find((conversationMessage) => conversationMessage.id === id);
@@ -50,7 +59,22 @@ export const messagesSlice = createSlice({
 					}
 					state.loading = false;
 				}
-				state.loading = false;
+			})
+			.addCase(deleteMessageThunk.pending, (state) => {
+				state.loading = true;
+			})
+			.addCase(deleteMessageThunk.fulfilled, (state, action: PayloadAction<DeleteMessageResponse | undefined>) => {
+				if (action.payload) {
+					const { conversationId, messageId } = action.payload;
+					const conversationMessages = state.messages.find(
+						(conversationMessage) => conversationMessage.id === +conversationId
+					);
+					if (!conversationMessages) return;
+					const messageIndex = conversationMessages.messages.findIndex((message) => message.id === +messageId);
+
+					conversationMessages?.messages.splice(messageIndex, 1);
+					state.loading = false;
+				}
 			}),
 });
 
@@ -63,6 +87,6 @@ export const selectConversationMessage = createSelector(
 	(conversationMessages, id) => conversationMessages.find((convMessage) => convMessage.id === id)
 );
 
-export const { addMessage } = messagesSlice.actions;
+export const { addMessage, deleteMessage } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

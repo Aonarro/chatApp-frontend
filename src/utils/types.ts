@@ -60,3 +60,8 @@ export type DeleteMessagePayload = {
 	messageId: number;
 	conversationId: number;
 };
+
+export type DeleteMessageResponse = {
+	conversationId: number;
+	messageId: number;
+};

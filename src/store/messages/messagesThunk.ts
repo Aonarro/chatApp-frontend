@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { deleteMessage, getConversationMessages } from '../../axios/api.ts';
-import { DeleteMessagePayload } from '../../utils/types.ts';
+import { DeleteMessagePayload, DeleteMessageResponse } from '../../utils/types.ts';
 
 export const fetchMessagesThunk = createAsyncThunk('messages/fetchMessages', async (conversationId: number) => {
 	try {
@@ -11,11 +11,11 @@ export const fetchMessagesThunk = createAsyncThunk('messages/fetchMessages', asy
 	}
 });
 
-export const deleteMessageThunk = createAsyncThunk('messages/delete', async (params: DeleteMessagePayload) => {
+export const deleteMessageThunk = createAsyncThunk('messages/deleteMessage', async (params: DeleteMessagePayload) => {
 	try {
 		const response = await deleteMessage(params);
-		return response.data;
+		return response.data as DeleteMessageResponse;
 	} catch (err) {
-		console.log(err);
+		console.log('Error in deleteMessageThunk:', err);
 	}
 });

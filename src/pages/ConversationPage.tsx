@@ -7,8 +7,8 @@ import { useAppDispatch } from '../hooks/typedReduxHooks.ts';
 import { useSocketContext } from '../hooks/useSocketContext.ts';
 import { addConversation, updateConversation } from '../store/conversations/conversationsSlice.ts';
 import { fetchConversationsThunk } from '../store/conversations/conversationsThunk.ts';
-import { addMessage } from '../store/messages/messagesSlice.ts';
-import { Conversation, MessageEventPayload } from '../utils/types.ts';
+import { addMessage, deleteMessage } from '../store/messages/messagesSlice.ts';
+import { Conversation, DeleteMessageResponse, MessageEventPayload } from '../utils/types.ts';
 
 const ConversationPage = () => {
 	const { id } = useParams();
@@ -38,12 +38,17 @@ const ConversationPage = () => {
 			console.log(payload);
 			dispatch(addConversation(payload));
 		});
+		socket.on('onMessageDelete', (payload: DeleteMessageResponse) => {
+			console.log('Message deleted: ', payload);
+			dispatch(deleteMessage(payload));
+		});
 		return () => {
 			socket.off('connect');
 			socket.disconnect();
 			socket.off('Connected to the chat');
 			socket.off('onMessage');
 			socket.off('onNewConversation');
+			socket.off('onMessageDelete');
 		};
 	}, []);
 
