@@ -11,7 +11,7 @@ type Props = {
 };
 
 const MessagePanel: FC<Props> = ({ sendTypingStatus }) => {
-	const [message, setMessage] = useState('');
+	const [message, setMessage] = useState<string>('');
 	const { id } = useParams();
 
 	const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -1,5 +1,11 @@
 import styled from 'styled-components';
-import { InputContainerProps, MessageItemContentProps, MessageItemProps, PageWrapperProps } from './StyleTypes';
+import {
+	ContextMenuProps,
+	InputContainerProps,
+	MessageItemContentProps,
+	MessageItemProps,
+	PageWrapperProps,
+} from './StyleTypes';
 
 //Constants
 export const SIDEBAR_WIDTH = 400;
@@ -202,6 +208,7 @@ export const MessageItemContainerStyle = styled.div<MessageItemProps>`
 	align-items: center;
 	padding: 5px 0;
 	margin-top: 15px;
+	position: relative;
 `;
 
 export const MessageItemAvatar = styled.div`
@@ -260,4 +267,26 @@ export const MessagePanelHeaderStyle = styled.header`
 	padding: 0 32px;
 	position: absolute;
 	width: 100%;
+`;
+
+export const ContextMenuStyle = styled.div<ContextMenuProps>`
+	border-radius: 4px;
+	position: fixed;
+	width: 200px;
+	background-color: #161616;
+	top: ${(props) => props.$top}px;
+	left: ${(props) => props.$left}px;
+
+	ul {
+		list-style-type: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+
+		li:hover {
+			cursor: pointer;
+			background-color: #323232;
+		}
+	}
 `;

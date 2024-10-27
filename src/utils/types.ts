@@ -49,10 +49,14 @@ export type ConversationMessage = {
 
 export type CreateMessageParams = {
 	content: string;
-	conversationId: number;
 };
 
 export type CreateConversationParams = {
 	email: string;
 	message: string;
+};
+
+export type DeleteMessagePayload = {
+	messageId: number;
+	conversationId: number;
 };

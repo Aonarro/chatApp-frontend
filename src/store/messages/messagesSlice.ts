@@ -24,6 +24,14 @@ export const messagesSlice = createSlice({
 			);
 			conversationMessages?.messages.unshift(message);
 		},
+		deleteMessage: (state, action) => {
+			console.log('Inside deleteMessage reducer');
+			const { payload } = action;
+			const conversationMessages = state.messages.find((messages) => messages.id === payload.conversationId);
+			if (!conversationMessages) return;
+			const messageIndex = conversationMessages.messages.findIndex((message) => message.id === payload.messageId);
+			conversationMessages.messages.splice(messageIndex, 1);
+		},
 	},
 	extraReducers: (builder) =>
 		builder
@@ -48,7 +56,7 @@ export const messagesSlice = createSlice({
 
 const selectConversationMessages = (state: RootState) => state.messages.messages;
 
-const selectConversationMessageId = (state: RootState, id: number) => id;
+const selectConversationMessageId = (_state: RootState, id: number) => id;
 
 export const selectConversationMessage = createSelector(
 	[selectConversationMessages, selectConversationMessageId],

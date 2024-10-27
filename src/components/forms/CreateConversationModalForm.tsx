@@ -14,7 +14,7 @@ type Props = {
 const CreateConversationModalForm: FC<Props> = ({ onClose }) => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const { register, handleSubmit, formState } = useForm<CreateConversationParams>({});
+	const { register, handleSubmit } = useForm<CreateConversationParams>({});
 
 	const onSubmit = (data: CreateConversationParams) => {
 		dispatch(postNewConversationThunk(data))

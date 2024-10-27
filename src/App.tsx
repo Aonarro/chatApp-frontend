@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Provider } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { AuthenticatedRoute } from './components/AuthenticatedRoute/AuthenticatedRoute.tsx';
+import { AuthenticatedRoute } from './components/authenticated-route/AuthenticatedRoute.tsx';
 import ConversationChannelPage from './pages/ConversationChannelPage';
 import ConversationPage from './pages/ConversationPage';
 import LoginPage from './pages/LoginPage';
