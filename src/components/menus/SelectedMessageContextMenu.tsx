@@ -16,10 +16,8 @@ const SelectedMessageContextMenu: FC<Props> = ({ messagePoints }) => {
 
 	const deleteMessage = () => {
 		console.log(`Delete message ${message?.id}`);
-		if (message) {
-			dispatch(deleteMessageThunk({ conversationId: +id!, messageId: message?.id }));
-			dispatch(deleteMessage());
-		}
+		if (!message) return;
+		dispatch(deleteMessageThunk({ conversationId: +id!, messageId: message?.id }));
 	};
 
 	return (
