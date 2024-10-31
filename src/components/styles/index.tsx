@@ -290,3 +290,14 @@ export const ContextMenuStyle = styled.div<ContextMenuProps>`
 		}
 	}
 `;
+
+export const TypingStatus = styled.div`
+	width: 100%;
+	font-size: 15px;
+	color: #818181;
+	/* margin: 5px 0 5px 0; */
+	box-sizing: border-box;
+	margin: 0 10px;
+	font-style: italic;
+	height: 21px;
+`;

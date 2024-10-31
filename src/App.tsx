@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Provider } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { AuthenticatedRoute } from './components/authenticated-route/AuthenticatedRoute.tsx';
 import ConversationChannelPage from './pages/ConversationChannelPage';
 import ConversationPage from './pages/ConversationPage';
@@ -19,6 +19,7 @@ function App() {
 			<AuthContext.Provider value={{ user, updateAuthUser: setUser }}>
 				<SocketContext.Provider value={socket}>
 					<Routes>
+						<Route path="/" element={<Navigate to="/conversations" replace />} />
 						<Route path="/register" element={<RegistrationPage />} />
 						<Route path="/login" element={<LoginPage />} />
 						<Route
